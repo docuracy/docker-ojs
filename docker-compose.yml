@@ -20,7 +20,7 @@ services:
     volumes:
       - ./volumes/db:/var/lib/mysql
       - ./volumes/dump:/docker-entrypoint-initdb.d
-#      - ./volumes/logs/db:/var/log/mysql
+      - ./volumes/logs/db:/var/log/mysql
 #      - ./volumes/config/db.charset.conf:/etc/mysql/conf.d/charset.cnf
     networks:
       - inside
@@ -36,13 +36,13 @@ services:
       - "${HTTP_PORT:-8081}:80"
       - "${HTTPS_PORT:-443}:443"
     volumes:
-      - /etc/localtime:/etc/localtime
+#       - /etc/localtime:/etc/localtime # File not present on Docuracy 2024 server
       - ./volumes/private:/var/www/files
       - ./volumes/public:/var/www/html/public
       - ./volumes/config/$COMPOSE_PROJECT_NAME.config.inc.php:/var/www/html/config.inc.php
-#      - ./volumes/logs/app:/var/log/apache2
-#      - ./volumes/config/apache.htaccess:/var/www/html/.htaccess
-#      - ./volumes/php.custom.ini:/usr/local/etc/php/conf.d/custom.ini
+      - ./volumes/logs/app:/var/log/apache2
+      - ./volumes/config/apache.htaccess:/var/www/html/.htaccess
+      - ./volumes/php.custom.ini:/usr/local/etc/php/conf.d/custom.ini
 
     networks:
       - inside
