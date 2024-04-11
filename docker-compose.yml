@@ -22,6 +22,8 @@ services:
       - ./volumes/dump:/docker-entrypoint-initdb.d
       - ./volumes/logs/db:/var/log/mysql
 #      - ./volumes/config/db.charset.conf:/etc/mysql/conf.d/charset.cnf
+    ports: # Expose the MariaDB container's port
+      - "${DB_PORT:-3306}:3306" # Map host port to container port
     networks:
       - inside
     restart: always
